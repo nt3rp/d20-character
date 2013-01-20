@@ -1,0 +1,8 @@
+{
+  "name": "d20-character",
+  "version": "0.0.0",
+  "dependencies": {
+    "backbone": "~0.9.10",
+    "underscore": "~1.4.3"
+  }
+}
