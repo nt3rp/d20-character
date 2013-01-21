@@ -2,4 +2,4 @@
 *~
 *.pyc
 *.idea
-static/js/*
+src/static/js/lib/*
