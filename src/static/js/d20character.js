@@ -10,6 +10,10 @@ var d20Character = Backbone.Model.extend({
         size: 'medium'
     },
 
+    addEquipment: function() {
+
+    },
+
     carryingCapacity: function() {
         var maxLoad,
             strength = this.get('strength') || 0,
