@@ -1,28 +1,39 @@
 describe("Equipment", function() {
-    var character;
+    var equipment;
 
     beforeEach(function() {
-        character = new d20Character();
+        equipment = new d20Equipment();
     });
 
-    // TODO: Are we concerned with HOW a player is able to carry gear?
-    // TODO: Throw specific exception?
-    it('should be able to add equipment to a character', function() {
-        expect(character.addEquipment).not.toThrow()
+    it('should be able to add equipment', function () {
+        equipment.add(new d20Item());
+        expect(equipment.length).toBeGreaterThan(0);
     });
 
-    // TODO: What is the equipment format?
-    // TODO: Should equipment be a separate model?
-    xit('should be able to see a list of a character\'s equipment', function () {
-        character.addEquipment('backpack')
+    it('should be able to remove equipment', function () {
+        var item = new d20Item();
+        equipment.add(item);
+        expect(equipment.length).toBeGreaterThan(0);
+        equipment.remove(item);
+        expect(equipment.length).toBeCloseTo(0);
     });
 
-    xit('should be able to remove equipment from a character', function () {
-
+    it('should be able to list equipment', function() {
+        var list;
+        equipment.add(new d20Item());
+        list = equipment.list();
+        // TODO: Need a better way to test this
+        expect(list).not.toBeUndefined();
     });
 
-    // TODO: Does this belong here?
-    xit('should be able to equip items', function() {
+    it('should be able to equip items', function() {
+        var item = new d20Item(),
+            equipped;
+        equipment.add(item);
 
-    })
+        equipment.equip(item);
+        equipped = equipment.list({'equipped': true});
+        // TODO: Need a better way to test this
+        expect(equipped.length).toBeGreaterThan(0);
+    });
 });

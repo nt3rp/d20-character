@@ -1,18 +1,17 @@
 var d20Character = Backbone.Model.extend({
-    defaults: {
-        strength:     10,
-        dexterity:    10,
-        constitution: 10,
-        intelligence: 10,
-        wisdom:       10,
-        charisma:     10,
-        legs: 2,      // really? This is how we will distinguish bipeds from others?
-        // Maybe instead of 'legs', should do this by race?
-        size: 'medium'
-    },
-
-    addEquipment: function() {
-
+    defaults: function() {
+        return {
+            strength:     10,
+            dexterity:    10,
+            constitution: 10,
+            intelligence: 10,
+            wisdom:       10,
+            charisma:     10,
+            legs: 2,      // really? This is how we will distinguish bipeds from others?
+            // Maybe instead of 'legs', should do this by race?
+            size: 'medium'
+            //TODO: Need to add equipment
+        }
     },
 
     carryingCapacity: function() {
@@ -81,6 +80,3 @@ var d20Character = Backbone.Model.extend({
         return Math.floor(modifier);
     }
 });
-
-// Leave this here for now
-window.d20Character = d20Character;
