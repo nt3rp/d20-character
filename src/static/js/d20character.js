@@ -7,6 +7,7 @@ var d20Character = Backbone.Model.extend({
         wisdom:       10,
         charisma:     10,
         legs: 2,      // really? This is how we will distinguish bipeds from others?
+        // Maybe instead of 'legs', should do this by race?
         size: 'medium'
     },
 
