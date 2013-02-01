@@ -10,6 +10,8 @@ describe("Equipment", function() {
         expect(equipment.length).toBeGreaterThan(0);
     });
 
+    // TODO: Should be able to add multiple items
+
     it('should be able to remove equipment', function () {
         var item = new d20Item();
         equipment.add(item);
@@ -26,6 +28,9 @@ describe("Equipment", function() {
         expect(list).not.toBeUndefined();
     });
 
+    // TODO: Should be able to remove multiple items
+    // TODO: Removing non-owned items should not fail
+
     it('should be able to equip items', function() {
         var item = new d20Item(),
             equipped;
@@ -36,4 +41,20 @@ describe("Equipment", function() {
         // TODO: Need a better way to test this
         expect(equipped.length).toBeGreaterThan(0);
     });
+
+    // TODO: Should not be able to equip items you don't have
+
+    it('should not be able to equip two suits of armour', function() {
+        var armour1 = new d20Item({'slot': d20Equipment.SLOT.armor}),
+            armour2 = new d20Item({'slot': d20Equipment.SLOT.armor});
+        equipment.add(armour1);
+        equipment.add(armour2);
+
+        equipment.equip(armour1);
+        //TODO: Throw specific exception
+        expect(function() { equipment.equip(armour2)}).toThrow();
+    });
+
+    // TODO: 2 x two-handed items
+    // TODO: 3 x one-handed items
 });
