@@ -35,7 +35,15 @@ var d20Equipment = Backbone.Collection.extend({
             foundItem = (this.where({'name': item}) || [])[0]; // `_.findWhere` not available :(
         }
 
-        // TODO: Exception if item is not found
+        // TODO: Do we want to throw an exception? Or just return at this point?
+        if (_.isUndefined(foundItem)) {
+            throw new Error('Item not found');
+        }
+
+        // TODO: Do we want to throw an exception? Or just return at this point?
+        if (foundItem.get('equipped')) {
+            throw new Error('Item already equipped');
+        }
 
         // Check if item slot is full
         slot = foundItem.get('slot');

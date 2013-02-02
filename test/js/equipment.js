@@ -44,9 +44,18 @@ describe("Equipment", function() {
 
     // TODO: Equipping an item should not duplicate the item
 
-    // TODO: Same item shouldn't be equippable multiple times
+    it('should not allow equipping the same item multiple times', function() {
+        var item = new d20Item();
+        equipment.add(item);
+        equipment.equip(item);
+        expect(function () { equipment.equip(item)}).toThrow('Item already equipped');
+    });
 
-    // TODO: Should not be able to equip items you don't have
+    it('should not allow equipping items it doesn\'t have', function() {
+        var item = new d20Item();
+        expect(function () { equipment.equip(item)}).toThrow('Item not found');
+    });
+
     it('should respect magic item slot limitation', function() {
         var item1, item2, item3, slot, slotIndex;
 
@@ -74,6 +83,5 @@ describe("Equipment", function() {
         }
     });
 
-    // TODO: 2 x two-handed items
-    // TODO: 3 x one-handed items
+    // TODO: How to deal with 'handed' items, and shields?
 });
