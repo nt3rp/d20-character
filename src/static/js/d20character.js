@@ -18,19 +18,20 @@ var d20Character = Backbone.Model.extend({
         var maxLoad,
             strength = this.get('strength') || 0,
             size = this.get('size') || 'medium',
-            legs = this.get('legs') || 2;
+            legs = this.get('legs') || 2,
+            strengthMultiplier,
+            tremendousStrength;
 
-        if (strength < 11) {
+        if (strength <= 10) {
             maxLoad = strength * 10;
-        } else {
-            /*
-                Both Paizo and WotC do some fudging; not sure how
-                to approximate. It's also possible that results are
-                off due to floating point precision problems.
-            */
-            maxLoad = 100 * Math.pow(1.15, strength-10);
+        } else if (strength < 30) {
+            maxLoad = d20Character.CARRYING_CAPACITY[strength];
+        } else if (strength >= 30) {
+            strengthMultiplier = Math.floor((strength-20)/10);
+            tremendousStrength = d20Character.CARRYING_CAPACITY[20 + (strength % 10)];
+            maxLoad = (4 * strengthMultiplier) * tremendousStrength;
         }
-        maxLoad *= d20Character.carryingCapacityMultiplier[size][legs];
+        maxLoad *= d20Character.CARRYING_CAPACITY_MULTIPLIER[size][legs];
 
         return {
             'light'   : Math.floor(maxLoad / 3),
@@ -56,7 +57,7 @@ var d20Character = Backbone.Model.extend({
         'collosal'   : 4
     },
 
-    carryingCapacityMultiplier: {
+    CARRYING_CAPACITY_MULTIPLIER: {
         /*
             For the most part, carrying capacity multipliers are straightforward:
                 - Bipeds
@@ -73,6 +74,34 @@ var d20Character = Backbone.Model.extend({
         'huge'       : {2: 4    , 4: 6   },
         'gargantuan' : {2: 8    , 4: 12  },
         'collosal'   : {2: 16   , 4: 24  }
+    },
+
+    /*
+    There is an algorithm that approximates this, but my need for accuracy
+    demands that I do things this way!
+
+         (str >= 11): 100 * Math.pow(1.15, strength-10);
+     */
+    CARRYING_CAPACITY: {
+        11: 115,
+        12: 130,
+        13: 150,
+        14: 175,
+        15: 200,
+        16: 230,
+        17: 260,
+        18: 300,
+        19: 350,
+        20: 400,
+        21: 460,
+        22: 520,
+        23: 600,
+        24: 700,
+        25: 800,
+        26: 920,
+        27: 1040,
+        28: 1200,
+        29: 1400
     },
 
     getModifier: function(stat) {

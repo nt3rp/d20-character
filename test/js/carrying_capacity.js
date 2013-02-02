@@ -98,7 +98,7 @@ describe("Carrying Capacity", function() {
 
     // Because of the fact that WotC and Paizo fudge the numbers, not
     // worrying if this test passes or not.
-    xit("should correctly calculate carrying capacities for different strength scores for medium bipeds", function() {
+    it("should correctly calculate carrying capacities for different strength scores for medium bipeds", function() {
         var i, capacities,
             maxLoads = [  // ... for a Medium bi-ped, obviously
                 {'max':    0},
@@ -130,12 +130,13 @@ describe("Carrying Capacity", function() {
                 {'max':  920},
                 {'max': 1040},
                 {'max': 1200},
-                {'max': 1400}
+                {'max': 1400},
+                {'max': 1600}
             ];
 
         // Why 30? See 'Tremendous Strength':
         //     http://www.d20pfsrd.com/alignment-description/carrying-capacity
-        for (i = 1; i < 30; i++) {
+        for (i = 1; i <= 30; i++) {
             character.set('strength', i);
             capacities = character.carryingCapacity();
             expect(capacities.max).toBeCloseTo(maxLoads[i].max);
