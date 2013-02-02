@@ -42,17 +42,36 @@ describe("Equipment", function() {
         expect(equipped.length).toBeGreaterThan(0);
     });
 
+    // TODO: Equipping an item should not duplicate the item
+
+    // TODO: Same item shouldn't be equippable multiple times
+
     // TODO: Should not be able to equip items you don't have
+    it('should respect magic item slot limitation', function() {
+        var item1, item2, item3, slot, slotIndex;
 
-    it('should not be able to equip two suits of armour', function() {
-        var armour1 = new d20Item({'slot': d20Equipment.SLOT.armor}),
-            armour2 = new d20Item({'slot': d20Equipment.SLOT.armor});
-        equipment.add(armour1);
-        equipment.add(armour2);
+        for (slotIndex in d20Equipment.SLOT) {
+            slot = d20Equipment.SLOT[slotIndex];
 
-        equipment.equip(armour1);
-        //TODO: Throw specific exception
-        expect(function() { equipment.equip(armour2)}).toThrow();
+            item1 = new d20Item({slot: slot});
+            equipment.add(item1);
+
+            item2 = new d20Item({slot: slot});
+            equipment.add(item2);
+
+            item3 = new d20Item({slot: slot});
+            equipment.add(item3);
+
+            equipment.equip(item1);
+
+            //TODO: Throw specific exceptions?
+            if (slot.name === 'ring') {
+                equipment.equip(item2);
+                expect(function() { equipment.equip(item3)}).toThrow();
+            } else {
+                expect(function() { equipment.equip(item2)}).toThrow();
+            }
+        }
     });
 
     // TODO: 2 x two-handed items

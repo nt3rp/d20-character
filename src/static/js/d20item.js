@@ -45,7 +45,10 @@ var d20Equipment = Backbone.Collection.extend({
         }).length;
 
         if (slotCount >= slot.limit) {
-            throw new Error('Exceed slot limit for ' + slot.name);
+            throw new Error(
+                'Exceeded slot limit equipping \'' + foundItem.get('name') + '\'' +
+                'to \'' + slot.name + '\' (Limit: ' + slot.limit+ ', Equipped: ' + slotCount + ')'
+            );
         }
 
         foundItem.set('equipped', true);
@@ -62,7 +65,7 @@ var d20Equipment = Backbone.Collection.extend({
             'limit': 1
         },
         'body': {
-            'name': 'belt',
+            'name': 'body',
             'limit': 1
         },
         'chest': {
